@@ -1,0 +1,13 @@
+.main-area {
+  min-height: 100vh;
+  background-image: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.253),
+      rgba(255, 255, 255, 0.37)
+    ),
+    url("../../images/bg.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}

@@ -1,24 +1,45 @@
-import logo from './logo.svg';
+import { createContext, useState } from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+import HeaderNavbar from './Components/HeaderNavbar/HeaderNavbar';
+import MainArea from './Components/MainArea/MainArea';
+import Blog from './Components/Blog/Blog';
+import Contact from './Components/Contact/Contact';
+import NotFound from './Components/NotFound/NotFound';
+import Destination from './Components/Destination/Destination';
+import Login from './Components/Login/Login';
 import './App.css';
+import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
+
+
+export const UserContext = createContext();
+
 
 function App() {
+  const [signedInUser, setSignedInUser] = useState({});
+  const [vehicleType, setVehicleType] = useState('');
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserContext.Provider value={[signedInUser, setSignedInUser, vehicleType, setVehicleType]}>
+      <Router>
+        <div className="App container-fluid">
+          <HeaderNavbar />
+          <Switch>
+            <Route exact path='/' component={MainArea} />
+            <Route path='/blog' component={Blog} />
+            <Route path='/contact' component={Contact} />
+            <Route path='/login' component={Login} />
+            <PrivateRoute path='/destination'>
+              <Destination />
+            </PrivateRoute>
+            <Route path='*' component={NotFound} />
+          </Switch>
+        </div>
+      </Router>
+    </UserContext.Provider>
   );
 }
 
