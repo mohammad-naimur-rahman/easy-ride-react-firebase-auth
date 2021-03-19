@@ -24,7 +24,11 @@ const Login = () => {
         isSignedIn: false,
         errorMessage: '',
         errorStatus: false
-    })
+    });
+    const [validationMsg, setValidationMsg] = useState({
+        msg: '',
+        errorStatus: false
+    });
     const history = useHistory();
     const location = useLocation();
     const { from } = location.state || { from: { pathname: "/" } };
@@ -126,6 +130,15 @@ const Login = () => {
                 const userInfo = { ...user };
                 userInfo.email = e.target.value;
                 setUser(userInfo);
+                const validation = { ...validationMsg };
+                validation.msg = '';
+                validation.errorStatus = false;
+                setValidationMsg(validation);
+            } else {
+                const validation = { ...validationMsg };
+                validation.msg = 'Please give a valid email address';
+                validation.errorStatus = true;
+                setValidationMsg(validation);
             }
         }
         if (e.target.name === 'password') {
@@ -136,6 +149,15 @@ const Login = () => {
                 const userInfo = { ...user };
                 userInfo.password = e.target.value;
                 setUser(userInfo);
+                const validation = { ...validationMsg };
+                validation.msg = '';
+                validation.errorStatus = false;
+                setValidationMsg(validation);
+            } else {
+                const validation = { ...validationMsg };
+                validation.msg = 'Password should be at least of 6 characters including a number';
+                validation.errorStatus = true;
+                setValidationMsg(validation);
             }
         }
     }
@@ -148,6 +170,9 @@ const Login = () => {
                 }
                 <input type="text" className='form-control my-3 px-1' onBlur={handleBlur} name="email" id="usermail" placeholder='Email address' required />
                 <input type="password" className='form-control my-3 px-1' onBlur={handleBlur} name="password" id="userpass" placeholder='Choose password' required />
+                {
+                    validationMsg.errorStatus && <p className='text-danger py-2'>{validationMsg.msg}</p>
+                }
                 <input type="submit" value={showSignIn ? 'Register' : 'Sign in'} className='btn btn-success px-4 py-1' />
                 <p className='text-center py-3 text-secondary'>{showSignIn ? 'Already have an account?' : 'Create a new account'}
                     <input type="checkbox" name="signin" id="signin" onChange={() => {
