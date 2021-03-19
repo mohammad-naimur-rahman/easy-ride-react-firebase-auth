@@ -7,3 +7,4 @@ Features:
 - Error handling
 - Dynamic rendering from API
 - Google map implement (development phrase)
+Live site link: https://easy-ride-auth-react.netlify.app/
